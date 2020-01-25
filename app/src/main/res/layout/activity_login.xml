@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@color/background_green">
+
+    <ImageView
+        android:id="@+id/kiit2"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="80dp"
+        android:src="@drawable/kiit"/>
+
+    <EditText
+        android:id="@+id/etUser"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/kiit2"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:hint="USER ID"
+        android:inputType="number"
+        android:textSize="20dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/edit_text_border"
+        android:paddingLeft="15dp"
+        android:drawableLeft="@drawable/user"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/etUser"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:hint="PASSWORD"
+        android:inputType="textPassword"
+        android:textSize="20dp"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/edit_text_border"
+        android:paddingLeft="15dp"
+        android:drawableLeft="@drawable/lock"
+        />
+
+    <TextView
+        android:id="@+id/tvForgotpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPassword"
+        android:layout_alignRight="@id/etPassword"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textColor="@color/kiit_green"
+        android:text="Forgot Password"/>
+
+    <Button
+        android:id="@+id/btLogin"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/tvForgotpass"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="LOGIN"
+        android:textSize="20dp"
+        android:layout_marginLeft="50dp"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_border"
+        android:shadowColor="#12ca2b"/>
+    <TextView
+        android:id="@+id/tvNewuser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btLogin"
+        android:layout_alignRight="@id/btLogin"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textColor="@color/kiit_green"
+        android:text="New User? Register here"/>
+
+
+
+</RelativeLayout>
+
+
+

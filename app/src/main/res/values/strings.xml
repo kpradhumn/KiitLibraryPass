@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Library Pass</string>
+
+    <string-array name="stream">
+        <item>Choose Stream</item>
+        <item>B.Tech</item>
+        <item>M.Tech</item>
+        <item>BCA</item>
+        <item>MCA</item>
+        <item>BBA</item>
+        <item>MBA</item>
+        <item>LAW</item>
+        <item>Bio Tech</item>
+
+    </string-array>
+</resources>
