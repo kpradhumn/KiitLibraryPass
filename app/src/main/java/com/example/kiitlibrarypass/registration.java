@@ -20,8 +20,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class registration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -33,6 +38,8 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
     private ProgressDialog loadingbar;
     private DatabaseReference rootrefernce;
     private String roll,setpwd;
+    private String currentuserid,name,conatct,hostel,year,branch,stream,rollno;
+    private DatabaseReference rootref;
 
 
 
@@ -40,6 +47,7 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        rootref=FirebaseDatabase.getInstance().getReference();
 
         mauth=FirebaseAuth.getInstance();
         loadingbar=new ProgressDialog(this);
@@ -68,15 +76,23 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
         btRegister=findViewById(R.id.btRegister);
 
         spStream.setOnItemSelectedListener(this);
+        Retrivieuserinfo();
 
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int flag;
-
+                name=etName.getText().toString();
+                conatct=etContact.getText().toString();
+                hostel=etHostel.getText().toString();
+                year=etYear.getText().toString();
+                branch=etBranch.getText().toString();
+                rollno=etRoll.getText().toString();
                 if(etName.getText().toString().trim().length()==0)
                     etName.setError("Name is required");
+                else
+
                 if (etRoll.getText().toString().trim().length()==0)
                     etRoll.setError("Roll no. is required");
                 else
@@ -149,6 +165,7 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
                     rootrefernce.child("Users").child(currentuserid).setValue("");
                     Toast.makeText(registration.this,"Account created suuccsefuly",Toast.LENGTH_LONG).show();
                     loadingbar.dismiss();
+                    updateuserinfo();
                     sendUsertomaintivity();
                 }
                 else
@@ -165,6 +182,10 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+         stream = parent.getItemAtPosition(position).toString();
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "You selected: " + stream,Toast.LENGTH_LONG).show();
 
     }
 
@@ -172,6 +193,72 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
         ((TextView)spStream.getSelectedView()).setError("Stream is required");
+
+    }
+    private void Retrivieuserinfo() {
+        currentuserid=mauth.getCurrentUser().getUid();
+        rootref.child("Users").child(currentuserid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name"))) {
+                    String retrieveusername = dataSnapshot.child("name").getValue().toString();
+                    String roll=dataSnapshot.child("roll").getValue().toString();
+                    String branch=dataSnapshot.child("branch").getValue().toString();
+                    String year=dataSnapshot.child("year").getValue().toString();
+                    String stream=dataSnapshot.child("stream").getValue().toString();
+                    String hostel=dataSnapshot.child("hostel").getValue().toString();
+                    String contact=dataSnapshot.child("contact").getValue().toString();
+                    etName.setText(retrieveusername);
+                    etRoll.setText(roll);
+                    etContact.setText(contact);
+                    etBranch.setText(branch);
+
+                    etYear.setText(year);
+                    etHostel.setText(hostel);
+
+
+                }
+                else
+                {
+                    etName.setVisibility(View.VISIBLE);
+                    Toast.makeText(registration.this,"Please set and update your profile info",Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    private void updateuserinfo()
+    {
+        currentuserid=mauth.getCurrentUser().getUid();
+
+        HashMap<String,String> profilemap=new HashMap<>();
+        profilemap.put("uid",currentuserid);
+        profilemap.put("name",name);
+        profilemap.put("roll",rollno);
+        profilemap.put("year",year);
+        profilemap.put("stream",stream);
+        profilemap.put("branch",branch);
+        profilemap.put("hostel",hostel);
+        profilemap.put("contact",conatct);
+
+        rootref.child("Users").child(currentuserid).setValue(profilemap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(registration.this, "Profile updated successfully", Toast.LENGTH_LONG).show();
+
+                } else {
+                    String msg = task.getException().toString();
+                    Toast.makeText(registration.this, "Error" + msg, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 

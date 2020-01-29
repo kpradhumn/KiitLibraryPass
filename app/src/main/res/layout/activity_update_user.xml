@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".registration"
+    tools:context=".UpdateUser"
     android:background="@color/background_green">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -166,57 +165,16 @@
                 android:layout_marginTop="5dp"
                 android:paddingLeft="10dp"
                 android:background="@drawable/edit_text_border"/>
-            <TextView
-                android:id="@+id/pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/etBranch"
-                android:text="Set Password"
-                android:textSize="25dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/kiit_green"/>
-            <EditText
-                android:id="@+id/pwdet"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@id/pwd"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
-                android:background="@drawable/edit_text_border"/>
-
-            <TextView
-                android:id="@+id/cnfpwdtv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/pwdet"
-                android:text="Confirm Password"
-                android:textSize="25dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/kiit_green"/>
-            <EditText
-                android:id="@+id/cnfpwd"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@id/cnfpwdtv"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
-                android:background="@drawable/edit_text_border"/>
 
 
             <Button
                 android:id="@+id/btRegister"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_below="@id/cnfpwd"
+                android:layout_below="@id/etBranch"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
-                android:text="REGISTER"
+                android:text="Update"
                 android:textSize="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginBottom="20dp"
@@ -225,6 +183,5 @@
                 />
         </RelativeLayout>
     </ScrollView>
-
 
 </RelativeLayout>
