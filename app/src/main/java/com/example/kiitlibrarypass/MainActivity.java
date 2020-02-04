@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,17 +65,37 @@ public class MainActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generate.setVisibility(View.INVISIBLE);
-                generated.setVisibility(View.VISIBLE);
-                fetchstudentdetails();
-                Calendar calfordate = Calendar.getInstance();
-                SimpleDateFormat currentdateformat = new SimpleDateFormat(" dd MMM,yyyy");
-                String currentdate = currentdateformat.format(calfordate.getTime());
-                Calendar calfortime = Calendar.getInstance();
-                SimpleDateFormat currenttimeformat = new SimpleDateFormat("hh:mm a");
-               String currenttime = currenttimeformat.format(calfortime.getTime());
-               date.setText(currentdate);
-               time.setText(currenttime);
+                Date date1 = new Date();
+
+                String strDateFormat = "hh:mm:ss a";
+
+                DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+
+                String formattedDate= dateFormat.format(date1);
+                String onlyhr=formattedDate.substring(0,2);
+               int finalhr=Integer.parseInt(onlyhr);
+
+                if((finalhr>7)) {
+                    generate.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake));
+                    Toast.makeText(MainActivity.this,"Pass generation time exceeded",Toast.LENGTH_LONG).show();
+                    generate.setText("Pass Generation failed!!");
+                    generate.setBackgroundColor(Color.RED);
+                }
+                else
+                {
+
+                    generate.setVisibility(View.INVISIBLE);
+                    generated.setVisibility(View.VISIBLE);
+                    fetchstudentdetails();
+                    Calendar calfordate = Calendar.getInstance();
+                    SimpleDateFormat currentdateformat = new SimpleDateFormat(" dd MMM,yyyy");
+                    String currentdate = currentdateformat.format(calfordate.getTime());
+                    Calendar calfortime = Calendar.getInstance();
+                    SimpleDateFormat currenttimeformat = new SimpleDateFormat("hh:mm a");
+                    String currenttime = currenttimeformat.format(calfortime.getTime());
+                    date.setText(currentdate);
+                    time.setText(currenttime);
+                }
             }
         });
 
@@ -130,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         generated.setVisibility(View.VISIBLE);
                         generate.setVisibility(View.INVISIBLE);
+
+
 
                     }
                 }
