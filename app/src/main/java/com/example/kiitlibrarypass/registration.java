@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,7 +77,9 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
         btRegister=findViewById(R.id.btRegister);
 
         spStream.setOnItemSelectedListener(this);
-        Retrivieuserinfo();
+        FirebaseUser mFirebaseUser = mauth.getCurrentUser();
+        if(mFirebaseUser != null)
+            Retrivieuserinfo();
 
 
         btRegister.setOnClickListener(new View.OnClickListener() {
@@ -161,12 +164,20 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    FirebaseUser user=mauth.getCurrentUser();
+                    user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(registration.this,"email verification sent",Toast.LENGTH_LONG).show();
+
+                        }
+                    });
                     String currentuserid=mauth.getCurrentUser().getUid();
                     rootrefernce.child("Users").child(currentuserid).setValue("");
                     Toast.makeText(registration.this,"Account created suuccsefuly",Toast.LENGTH_LONG).show();
                     loadingbar.dismiss();
                     updateuserinfo();
-                    sendUsertomaintivity();
+                    sendUsertologin();
                 }
                 else
                 {
@@ -262,9 +273,9 @@ public class registration extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private void sendUsertomaintivity() {
+    private void sendUsertologin() {
 
-        Intent mainintent=new Intent(registration.this,MainActivity.class);
+        Intent mainintent=new Intent(registration.this,LoginActivity.class);
 
         mainintent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainintent);

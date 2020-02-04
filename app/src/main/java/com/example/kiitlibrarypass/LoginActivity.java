@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     EditText etUser,etPassword;
@@ -66,35 +67,44 @@ public class LoginActivity extends AppCompatActivity {
         else if(etPassword.getText().toString().trim().length()==0)
             etPassword.setError("password is required");
 
-        else
-        {
+        else {
+
             loadingbar.setTitle("Signing in");
             loadingbar.setMessage("Please wait while we are signing you in");
             loadingbar.setCanceledOnTouchOutside(true);
             loadingbar.show();
-            mauth.signInWithEmailAndPassword(useremail,userpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful())
-                    {
-                        Toast.makeText(LoginActivity.this,"Logged in successfuly",Toast.LENGTH_LONG).show();
-                        loadingbar.dismiss();
-                        sendUsertoMainactivity();
-                        //finish();
-                    }
-                    else
-                    {
-                        String message=task.getException().toString();
-                        Toast.makeText(LoginActivity.this,"Invalid Credentials",Toast.LENGTH_LONG).show();
-                        loadingbar.dismiss();
-                    }
 
 
-                }
-            });
+
+                mauth.signInWithEmailAndPassword(useremail, userpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mauth.getCurrentUser();
+                            if (user.isEmailVerified()) {
+                                Toast.makeText(LoginActivity.this, "Logged in successfuly", Toast.LENGTH_LONG).show();
+                                loadingbar.dismiss();
+                                sendUsertoMainactivity();
+                            }
+                            else {
+                                loadingbar.dismiss();
+                                Toast.makeText(LoginActivity.this, "Please verify your email", Toast.LENGTH_LONG).show();
+                            }
+                            //finish();
+                        } else {
+                            String message = task.getException().toString();
+                            Toast.makeText(LoginActivity.this, "Invalid Credentials", Toast.LENGTH_LONG).show();
+                            loadingbar.dismiss();
+                        }
+
+
+                    }
+                });
+
+            }
 
         }
-    }
+
     private void sendUsertoregactivity() {
 
         Intent logininten=new Intent(LoginActivity.this,registration.class);
