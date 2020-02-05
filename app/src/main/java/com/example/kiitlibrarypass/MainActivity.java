@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 String onlyhr=formattedDate.substring(0,2);
                int finalhr=Integer.parseInt(onlyhr);
 
-                if((finalhr>7)) {
+
+                if((finalhr>=7)) {
                     generate.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.shake));
                     Toast.makeText(MainActivity.this,"Pass generation time exceeded",Toast.LENGTH_LONG).show();
                     generate.setText("Pass Generation failed!!");
