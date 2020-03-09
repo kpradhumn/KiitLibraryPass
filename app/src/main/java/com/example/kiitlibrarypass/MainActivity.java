@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-
+                  Toast.makeText(MainActivity.this,finalhr,Toast.LENGTH_LONG).show();
                     generate.setVisibility(View.INVISIBLE);
                     generated.setVisibility(View.VISIBLE);
                     fetchstudentdetails();
