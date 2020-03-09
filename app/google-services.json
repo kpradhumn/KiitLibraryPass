@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "901596125435",
+    "firebase_url": "https://kiitlibrarypass.firebaseio.com",
+    "project_id": "kiitlibrarypass",
+    "storage_bucket": "kiitlibrarypass.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901596125435:android:f05077441c726650b0b85e",
+        "android_client_info": {
+          "package_name": "com.example.kiitlibrarypass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901596125435-83lh0cj444kggenprrif9o5gvpeuchdg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kiitlibrarypass",
+            "certificate_hash": "7e6278d029502fbeabd031fbd0198cec69a865bb"
+          }
+        },
+        {
+          "client_id": "901596125435-mqnd6hkm0d8bld5si4jtjaulkrt73b6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaDST_IlLZuwBDQgwrJhGkpf4wK5H7HzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901596125435-mqnd6hkm0d8bld5si4jtjaulkrt73b6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
